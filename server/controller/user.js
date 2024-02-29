@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt")
 const signUpUser = require("../models/user/signUp")
+const jwt =  require("jsonwebtoken")
 
 
 //@Des: This is user Signup function
@@ -31,7 +32,9 @@ const userLogin = async(req,res) => {
         if(findingUser){
             console.log(findingUser)
             const passwordMatching = await bcrypt.compare(password,findingUser.password)
-            console.log("is pass match", passwordMatching)
+            if(passwordMatching){
+                res.status(200).json(findingUser)
+            }
         }
 
     }catch(err){
